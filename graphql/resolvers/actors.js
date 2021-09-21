@@ -18,5 +18,20 @@ module.exports = {
       console.log(actors);
       return actors;
     },
+    getActor: async (_, { actorId }) => {
+      const actor = await Actor.findByPk(actorId, {
+        include: [
+          {
+            model: Character,
+            include: [
+              {
+                model: Quote,
+              },
+            ],
+          },
+        ],
+      });
+      return actor;
+    },
   },
 };
