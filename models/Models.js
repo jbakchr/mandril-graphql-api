@@ -5,6 +5,7 @@ const db = require("../db/db");
 const Quote = require("./Quote");
 const Character = require("./Character");
 const Actor = require("./Actor");
+const Warning = require("./Warning");
 
 // Quote
 Quote.belongsTo(Character);
@@ -20,4 +21,5 @@ module.exports = {
   Quote,
   Character,
   Actor,
+  Warning,
 };
