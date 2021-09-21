@@ -17,6 +17,10 @@ const typeDefs = gql`
     actor: String!
     characters: [Character]
   }
+  type Warning {
+    id: ID!
+    warning: String!
+  }
   type Query {
     getQuotes: [Quote]
     getQuote(quoteId: ID!): Quote
