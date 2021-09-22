@@ -4,6 +4,8 @@ const { ApolloServer } = require("apollo-server");
 const db = require("./db/db");
 const dbSeeding = require("./db/dbSeeding");
 
+const redisClient = require("./db/redisClient");
+
 const typeDefs = require("./graphql/typeDefs");
 const resolvers = require("./graphql/resolvers");
 
