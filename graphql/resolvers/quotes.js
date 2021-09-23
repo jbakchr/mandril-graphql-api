@@ -12,6 +12,7 @@ module.exports = {
       const cachedQuotes = await redisClientGetAsync("quotes:all");
 
       if (cachedQuotes) {
+        console.log("Sending cached quotes");
         return JSON.parse(cachedQuotes);
       }
 
@@ -28,7 +29,12 @@ module.exports = {
         ],
       });
 
-      await redisClientSetExAsync("quotes:all", 60 * 60 * 24);
+      await redisClientSetExAsync(
+        "quotes:all",
+        60 * 60 * 24,
+        JSON.stringify(quotes)
+      );
+      console.log("All quotes cache with expiry");
 
       return quotes;
     },
