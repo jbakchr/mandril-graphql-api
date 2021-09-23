@@ -1,6 +1,7 @@
 const {
   redisClientGetAsync,
   redisClientSetAsync,
+  redisClientSetExAsync,
 } = require("../../db/redisClient");
 
 const { Quote, Character, Actor } = require("../../models/Models");
@@ -11,7 +12,6 @@ module.exports = {
       const cachedQuotes = await redisClientGetAsync("quotes:all");
 
       if (cachedQuotes) {
-        console.log("sending cached quotes");
         return JSON.parse(cachedQuotes);
       }
 
@@ -28,9 +28,7 @@ module.exports = {
         ],
       });
 
-      await redisClientSetAsync("quotes:all", JSON.stringify(quotes));
-
-      console.log("No quotes cached. Sending fetched quotes");
+      await redisClientSetExAsync("quotes:all", 60 * 60 * 24);
 
       return quotes;
     },
