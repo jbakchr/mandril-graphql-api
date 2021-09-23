@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Esmun
+      MYSQL_DATABASE: mandrilapi
+    cap_add:
+      - SYS_NICE
+  redis-server:
+    image: redis
