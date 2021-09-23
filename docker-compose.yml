@@ -3,8 +3,8 @@ version: "3.9"
 services:
   db:
     image: mysql
-    container_name: db
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: Esmun
       MYSQL_DATABASE: mandrilapi
@@ -12,3 +12,15 @@ services:
       - SYS_NICE
   redis-server:
     image: redis
+    container_name: "redis-server"
+    ports:
+      - "6379:6379"
+  backend:
+    build:
+      context: ./
+    ports:
+      - "5000:5000"
+    container_name: "backend"
+    command: ["./wait-for-it.sh", "db:3306", "--", "npm", "start"]
+    depends_on:
+      - db
