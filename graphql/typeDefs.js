@@ -58,6 +58,9 @@ const typeDefs = gql`
     getActors: [Actor]
     "Get actor by id"
     getActor(actorId: ID!): Actor
+
+    "Get all warnings"
+    getWarnings: [Warning]
   }
 `;
 
