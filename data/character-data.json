@@ -1,18 +1,22 @@
 [
   {
     "character": "Bianca Landsvig",
+    "characteristics": "Tusindkunstner",
     "actorId": 1
   },
   {
     "character": "Broder Salsa",
+    "characteristics": "Tæppefolder og voldtægtsmand",
     "actorId": 1
   },
   {
     "character": "Bent Tonse",
+    "characteristics": "Mandrilseer nummer 1 milliard",
     "actorId": 2
   },
   {
     "character": "Pelle Klumpfeber",
+    "characteristics": "Regelbesat budbringer",
     "actorId": 3
   },
   {
@@ -21,6 +25,7 @@
   },
   {
     "character": "Renè D. Seance",
+    "characteristics": "Verdens mægtigste mand",
     "actorId": 2
   }
 ]

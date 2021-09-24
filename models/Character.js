@@ -9,6 +9,10 @@ Character.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    characteristics: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+    },
   },
   {
     sequelize: db,

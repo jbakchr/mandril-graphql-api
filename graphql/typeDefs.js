@@ -17,6 +17,8 @@ const typeDefs = gql`
     id: ID!
     "The character"
     character: String!
+    "Characteristics of the character"
+    characteristics: String
     "Quotes made by character"
     quotes: [Quote]
     "The actor playing the character"
