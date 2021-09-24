@@ -6,5 +6,9 @@ module.exports = {
       const warnings = await Warning.findAll();
       return warnings;
     },
+    getWarning: async (_, { warningId }) => {
+      const warning = await Warning.findByPk(warningId);
+      return warning;
+    },
   },
 };

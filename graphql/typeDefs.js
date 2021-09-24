@@ -61,6 +61,8 @@ const typeDefs = gql`
 
     "Get all warnings"
     getWarnings: [Warning]
+    "Get specific warning"
+    getWarning(warningId: ID!): Warning
   }
 `;
 
