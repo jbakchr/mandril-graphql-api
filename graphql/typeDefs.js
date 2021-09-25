@@ -43,6 +43,13 @@ const typeDefs = gql`
     warning: String!
   }
 
+  type User {
+    id: ID!
+    email: String!
+    password: String!
+    token: String
+  }
+
   type Query {
     "Get all quotes"
     getQuotes: [Quote]
@@ -63,6 +70,10 @@ const typeDefs = gql`
     getWarnings: [Warning]
     "Get specific warning"
     getWarning(warningId: ID!): Warning
+  }
+
+  type Mutation {
+    register(email: String!, password: String!): User
   }
 `;
 

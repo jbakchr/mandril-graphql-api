@@ -6,6 +6,7 @@ const Quote = require("./Quote");
 const Character = require("./Character");
 const Actor = require("./Actor");
 const Warning = require("./Warning");
+const User = require("./User");
 
 // Quote
 Quote.belongsTo(Character);
@@ -22,4 +23,5 @@ module.exports = {
   Character,
   Actor,
   Warning,
+  User,
 };
