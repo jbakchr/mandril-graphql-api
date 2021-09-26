@@ -4,15 +4,26 @@ const jwt = require("jsonwebtoken");
 
 const { User } = require("../../models/Models");
 
+const getUser = async (email) => {
+  const user = null;
+  try {
+    user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+  } catch (error) {
+    throw new Error("Something went wrong", { error });
+  }
+
+  return user;
+};
+
 module.exports = {
   Mutation: {
     register: async (_, { email, password }) => {
       // Check if user exists
-      const existingUser = await User.findOne({
-        where: {
-          email,
-        },
-      });
+      const existingUser = await getUser(email);
 
       if (existingUser) {
         throw new UserInputError("username is taken", {
@@ -51,16 +62,7 @@ module.exports = {
     },
     login: async (_, { email, password }) => {
       // Check for existing user
-      let user;
-      try {
-        user = await User.findOne({
-          where: {
-            email,
-          },
-        });
-      } catch (error) {
-        throw new Error("Something went wrong", { error });
-      }
+      let user = await getUser(email);
 
       if (!user) {
         throw new UserInputError("User not found");
