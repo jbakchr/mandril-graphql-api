@@ -14,8 +14,6 @@ module.exports = {
         },
       });
 
-      console.log("existingUser:", existingUser);
-
       if (existingUser) {
         throw new UserInputError("username is taken", {
           error: {
@@ -45,6 +43,47 @@ module.exports = {
         secret,
         { expiresIn: "7d" }
       );
+
+      return {
+        id: user.id,
+        token,
+      };
+    },
+    login: async (_, { email, password }) => {
+      // Check for existing user
+      let user;
+      try {
+        user = await User.findOne({
+          where: {
+            email,
+          },
+        });
+      } catch (error) {
+        throw new Error("Something went wrong", { error });
+      }
+
+      if (!user) {
+        throw new UserInputError("User not found");
+      }
+
+      // Check password
+      let isValidPassword;
+      try {
+        isValidPassword = await bcrypt.compare(password, user.password);
+      } catch (error) {
+        throw new Error("Something went wrong", { error });
+      }
+
+      if (!isValidPassword) {
+        throw new Error("Unable to login");
+      }
+
+      // Create token
+      const secret = process.env.JWT_SECRET
+        ? process.env.JWT_SECRET
+        : "Sut min numse";
+
+      const token = jwt.sign({ id: user.id }, secret, { expiresIn: "7d" });
 
       return {
         id: user.id,
