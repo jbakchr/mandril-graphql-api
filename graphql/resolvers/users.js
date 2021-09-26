@@ -29,6 +29,24 @@ const checkPassword = async (password, user) => {
   return isValidPassword;
 };
 
+const generateToken = (user) => {
+  // Get jwt secret
+  const secret = process.env.JWT_SECRET
+    ? process.env.JWT_SECRET
+    : "Sut min numse";
+
+  // Sign and return token
+  const token = jwt.sign(
+    {
+      userId: user.id,
+    },
+    secret,
+    { expiresIn: "7d" }
+  );
+
+  return token;
+};
+
 module.exports = {
   Mutation: {
     register: async (_, { email, password }) => {
@@ -53,17 +71,7 @@ module.exports = {
       });
 
       // Create token
-      const secret = process.env.JWT_SECRET
-        ? process.env.JWT_SECRET
-        : "Sut min numse";
-
-      const token = jwt.sign(
-        {
-          userId: user.id,
-        },
-        secret,
-        { expiresIn: "7d" }
-      );
+      const token = generateToken(user);
 
       return {
         id: user.id,
@@ -86,11 +94,7 @@ module.exports = {
       }
 
       // Create token
-      const secret = process.env.JWT_SECRET
-        ? process.env.JWT_SECRET
-        : "Sut min numse";
-
-      const token = jwt.sign({ id: user.id }, secret, { expiresIn: "7d" });
+      const token = generateToken(user);
 
       return {
         id: user.id,
