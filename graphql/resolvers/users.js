@@ -19,6 +19,16 @@ const getUser = async (email) => {
   return user;
 };
 
+const checkPassword = async (password, user) => {
+  let isValidPassword;
+  try {
+    isValidPassword = await bcrypt.compare(password, user.password);
+  } catch (error) {
+    throw new Error("Something went wrong", { error });
+  }
+  return isValidPassword;
+};
+
 module.exports = {
   Mutation: {
     register: async (_, { email, password }) => {
@@ -69,12 +79,7 @@ module.exports = {
       }
 
       // Check password
-      let isValidPassword;
-      try {
-        isValidPassword = await bcrypt.compare(password, user.password);
-      } catch (error) {
-        throw new Error("Something went wrong", { error });
-      }
+      let isValidPassword = await checkPassword(password, user);
 
       if (!isValidPassword) {
         throw new Error("Unable to login");

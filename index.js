@@ -13,7 +13,7 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
-db.sync({ force: true })
+db.sync({ alter: true })
   .then(() => {
     server.listen(5000).then((res) => {
       console.log(res.url);
