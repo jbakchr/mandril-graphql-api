@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../../models/Models");
 
 const getUser = async (email) => {
-  const user = null;
+  let user;
   try {
     user = await User.findOne({
       where: {
