@@ -43,10 +43,15 @@ const typeDefs = gql`
     warning: String!
   }
 
+  "Users"
   type User {
+    "User id"
     id: ID!
+    "Users email"
     email: String!
+    "Hashed password"
     password: String!
+    "Token"
     token: String
   }
 
