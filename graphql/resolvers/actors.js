@@ -15,7 +15,6 @@ module.exports = {
           },
         ],
       });
-      console.log(actors);
       return actors;
     },
     getActor: async (_, { actorId }) => {
