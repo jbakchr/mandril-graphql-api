@@ -9,14 +9,14 @@ const warningData = require("../data/warning-data.json");
 
 module.exports = async () => {
   // Actor
-  Actor.bulkCreate(actorData);
+  await Actor.bulkCreate(actorData);
 
   // Character
-  Character.bulkCreate(characterData);
+  await Character.bulkCreate(characterData);
 
   // Quote
-  Quote.bulkCreate(quoteData);
+  await Quote.bulkCreate(quoteData);
 
   // Warning
-  Warning.bulkCreate(warningData);
+  await Warning.bulkCreate(warningData);
 };

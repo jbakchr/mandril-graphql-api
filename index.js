@@ -15,9 +15,9 @@ const server = new ApolloServer({
 
 db.sync({ alter: true })
   .then(() => {
-    server.listen(5000).then((res) => {
-      console.log(res.url);
-      dbSeeding();
+    server.listen(5000).then(async (res) => {
+      await dbSeeding();
+      console.log(`🐵 Mandril GraphQL API running at: ${res.url} 🐵`);
     });
   })
   .catch((err) => console.log(err));
