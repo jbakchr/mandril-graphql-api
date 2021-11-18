@@ -55,6 +55,14 @@ const typeDefs = gql`
     token: String
   }
 
+  "Credentials for register and login"
+  input Credentials {
+    "email"
+    email: String!
+    "password"
+    password: String!
+  }
+
   type Query {
     "Get all quotes"
     getQuotes: [Quote]
@@ -79,7 +87,7 @@ const typeDefs = gql`
 
   type Mutation {
     "Register user by email and password"
-    register(email: String!, password: String!): User
+    register(credentials: Credentials!): User
     "Login user by email and password"
     login(email: String!, password: String!): User
   }

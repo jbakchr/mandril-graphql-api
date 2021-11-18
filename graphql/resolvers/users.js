@@ -49,7 +49,7 @@ const generateToken = (user) => {
 
 module.exports = {
   Mutation: {
-    register: async (_, { email, password }) => {
+    register: async (_, { credentials: { email, password } }) => {
       // Check if user exists
       const existingUser = await getUser(email);
 
