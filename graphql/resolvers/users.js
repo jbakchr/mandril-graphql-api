@@ -5,28 +5,25 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../../models/Models");
 
 const getUser = async (email) => {
-  let user;
   try {
-    user = await User.findOne({
+    const user = await User.findOne({
       where: {
         email,
       },
     });
+    return user;
   } catch (error) {
-    throw new Error("Something went wrong", { error });
+    throw new Error("Unable to verify user", { error });
   }
-
-  return user;
 };
 
 const checkPassword = async (password, user) => {
-  let isValidPassword;
   try {
-    isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    return isValidPassword;
   } catch (error) {
     throw new Error("Something went wrong", { error });
   }
-  return isValidPassword;
 };
 
 const generateToken = (user) => {
