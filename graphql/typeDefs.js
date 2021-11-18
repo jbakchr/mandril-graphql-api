@@ -63,6 +63,11 @@ const typeDefs = gql`
     password: String!
   }
 
+  input QuoteInput {
+    quote: String!
+    characterId: Int!
+  }
+
   type Query {
     "Get all quotes"
     getQuotes: [Quote]
@@ -90,6 +95,9 @@ const typeDefs = gql`
     register(credentials: Credentials!): User
     "Login user by email and password"
     login(email: String!, password: String!): User
+
+    "Create quote"
+    addQuote(quoteInput: QuoteInput!): Quote
   }
 `;
 
