@@ -12,6 +12,7 @@ module.exports = {
     ...warningsResolvers.Query,
   },
   Mutation: {
+    ...quotesResolvers.Mutation,
     ...usersResolvers.Mutation,
   },
 };

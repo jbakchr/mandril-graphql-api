@@ -13,7 +13,7 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
-db.sync({ alter: true })
+db.sync({ force: true })
   .then(() => {
     server.listen(5000).then(async (res) => {
       await dbSeeding();

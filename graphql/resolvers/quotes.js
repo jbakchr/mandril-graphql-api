@@ -4,6 +4,7 @@ const {
   redisClientSetExAsync,
 } = require("../../db/redisClient");
 
+const checkAuth = require("../../utils/check-auth");
 const { Quote, Character, Actor } = require("../../models/Models");
 
 module.exports = {
@@ -50,6 +51,53 @@ module.exports = {
         ],
       });
       return quote;
+    },
+  },
+  Mutation: {
+    addQuote: async (_, { quoteInput: { quote, characterId } }, context) => {
+      // Check if user is authenticated
+      checkAuth(context);
+
+      // Check if quote already exist
+      let existingQuote;
+      try {
+        existingQuote = await Quote.findOne({
+          where: {
+            quote,
+          },
+        });
+      } catch (error) {
+        throw new Error("Unable to find quote");
+      }
+
+      if (existingQuote) {
+        throw new Error("Quote already exists");
+      }
+
+      // Check if character exist
+      let character;
+      try {
+        character = await Character.findByPk(characterId);
+      } catch (error) {
+        throw new Error("Unable to find character");
+      }
+
+      if (!character) {
+        throw new Error("No character with that id exist");
+      }
+
+      // Create new quote
+      let newQuote;
+      try {
+        newQuote = await Quote.create({
+          quote,
+          characterId,
+        });
+      } catch (error) {
+        throw new Error("Unable to add new quote");
+      }
+
+      return newQuote;
     },
   },
 };
