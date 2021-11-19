@@ -7,6 +7,28 @@ const {
 const checkAuth = require("../../utils/check-auth");
 const { Quote, Character, Actor } = require("../../models/Models");
 
+const findQuote = async (quote) => {
+  try {
+    const existingQuote = await Quote.findOne({
+      where: {
+        quote,
+      },
+    });
+    return existingQuote;
+  } catch (error) {
+    throw new Error("Unable to find quote");
+  }
+};
+
+const findCharacterById = async (characterId) => {
+  try {
+    const character = await Character.findByPk(characterId);
+    return character;
+  } catch (error) {
+    throw new Error("Unable to find character");
+  }
+};
+
 module.exports = {
   Query: {
     getQuotes: async () => {
@@ -59,28 +81,14 @@ module.exports = {
       checkAuth(context);
 
       // Check if quote already exist
-      let existingQuote;
-      try {
-        existingQuote = await Quote.findOne({
-          where: {
-            quote,
-          },
-        });
-      } catch (error) {
-        throw new Error("Unable to find quote");
-      }
+      const existingQuote = await findQuote(quote);
 
       if (existingQuote) {
         throw new Error("Quote already exists");
       }
 
       // Check if character exist
-      let character;
-      try {
-        character = await Character.findByPk(characterId);
-      } catch (error) {
-        throw new Error("Unable to find character");
-      }
+      const character = await findCharacterById(characterId);
 
       if (!character) {
         throw new Error("No character with that id exist");
