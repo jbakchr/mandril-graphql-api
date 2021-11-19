@@ -29,6 +29,26 @@ const findCharacterById = async (characterId) => {
   }
 };
 
+const getQuoteById = async (quoteId) => {
+  try {
+    const quote = await Quote.findByPk(quoteId, {
+      include: [
+        {
+          model: Character,
+          include: [
+            {
+              model: Actor,
+            },
+          ],
+        },
+      ],
+    });
+    return quote;
+  } catch (error) {
+    throw new Error("Unable to find quote");
+  }
+};
+
 module.exports = {
   Query: {
     getQuotes: async () => {
@@ -104,6 +124,8 @@ module.exports = {
       } catch (error) {
         throw new Error("Unable to add new quote");
       }
+
+      newQuote = await getQuoteById(newQuote.id);
 
       return newQuote;
     },
